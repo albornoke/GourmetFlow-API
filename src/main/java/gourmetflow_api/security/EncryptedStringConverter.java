@@ -13,7 +13,7 @@ public class EncryptedStringConverter implements AttributeConverter<String, Stri
     // En un entorno real, esta llave se lee de una variable de entorno: System.getenv("AES_SECRET_KEY")
     // Debe tener exactamente 16, 24 o 32 bytes (ej. 32 caracteres para AES-256)
     private static final String ALGORITHM = "AES";
-    private static final byte[] KEY = "GourmetFlowSecretKeySuperSecure2026!".getBytes(StandardCharsets.UTF_8);
+    private static final byte[] KEY = "GourmetFlowEnterpriseAESKey2026!".getBytes(StandardCharsets.UTF_8);
 
     @Override
     public String convertToDatabaseColumn(String attribute) {

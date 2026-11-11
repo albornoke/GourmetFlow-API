@@ -1,5 +1,6 @@
 package gourmetflow_api.controller;
 
+import gourmetflow_api.dto.MesaRequestDTO;
 import gourmetflow_api.model.Mesa;
 import gourmetflow_api.service.MesaService;
 import jakarta.validation.Valid;
@@ -19,14 +20,27 @@ public class MesaController {
         this.mesaService = mesaService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Mesa>> obtenerMesas() {
-        return ResponseEntity.ok(mesaService.listarMesas());
+    @PostMapping
+    public ResponseEntity<Mesa> crearMesa(@Valid @RequestBody MesaRequestDTO request) {
+        Mesa nuevaMesa = mesaService.crearMesa(request);
+        return new ResponseEntity<>(nuevaMesa, HttpStatus.CREATED);
     }
 
-    @PostMapping
-    public ResponseEntity<Mesa> crearMesa(@Valid @RequestBody Mesa mesa) {
-        Mesa nuevaMesa = mesaService.registrarMesa(mesa);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaMesa);
+    @GetMapping
+    public ResponseEntity<List<Mesa>> listarMesas() {
+        List<Mesa> mesas = mesaService.listarMesas();
+        return ResponseEntity.ok(mesas);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Mesa> actualizarMesa(@PathVariable Long id, @Valid @RequestBody MesaRequestDTO request) {
+        Mesa mesaActualizada = mesaService.actualizarMesa(id, request);
+        return ResponseEntity.ok(mesaActualizada);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarMesa(@PathVariable Long id) {
+        mesaService.eliminarMesa(id);
+        return ResponseEntity.noContent().build();
     }
 }

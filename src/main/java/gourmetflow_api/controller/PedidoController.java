@@ -1,5 +1,6 @@
 package gourmetflow_api.controller;
 
+import gourmetflow_api.dto.PedidoRequestDTO;
 import gourmetflow_api.model.Pedido;
 import gourmetflow_api.service.PedidoService;
 import jakarta.validation.Valid;
@@ -19,14 +20,27 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Pedido>> obtenerPedidos() {
-        return ResponseEntity.ok(pedidoService.listarPedidos());
+    @PostMapping
+    public ResponseEntity<Pedido> crearPedido(@Valid @RequestBody PedidoRequestDTO request) {
+        Pedido nuevoPedido = pedidoService.crearPedido(request);
+        return new ResponseEntity<>(nuevoPedido, HttpStatus.CREATED);
     }
 
-    @PostMapping
-    public ResponseEntity<Pedido> registrarPedido(@Valid @RequestBody Pedido pedido) {
-        Pedido nuevoPedido = pedidoService.crearPedido(pedido);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPedido);
+    @GetMapping
+    public ResponseEntity<List<Pedido>> listarPedidos() {
+        List<Pedido> pedidos = pedidoService.listarPedidos();
+        return ResponseEntity.ok(pedidos);
+    }
+
+    @PatchMapping("/{id}/estado")
+    public ResponseEntity<Pedido> actualizarEstado(@PathVariable Long id, @RequestParam String estado) {
+        Pedido pedidoActualizado = pedidoService.actualizarEstadoPedido(id, estado);
+        return ResponseEntity.ok(pedidoActualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarPedido(@PathVariable Long id) {
+        pedidoService.eliminarPedido(id);
+        return ResponseEntity.noContent().build();
     }
 }
