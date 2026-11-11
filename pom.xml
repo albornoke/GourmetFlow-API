@@ -68,6 +68,20 @@
 			<version>2.5.0</version>
 		</dependency>
 
+		<!-- Soporte oficial para JWE (JSON Web Encryption) -->
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>9.37.3</version>
+		</dependency>
+
+		<!-- Soporte para TOTP / 2FA compatible con Microsoft Authenticator -->
+		<dependency>
+			<groupId>com.warrenstrange</groupId>
+			<artifactId>googleauth</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
