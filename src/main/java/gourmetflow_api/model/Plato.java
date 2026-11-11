@@ -37,10 +37,8 @@ public class Plato {
         this.fechaCreacion = LocalDateTime.now();
     }
 
-    // Constructor vacío requerido por JPA
     public Plato() {}
 
-    // Getters y Setters seguros (Sin exponer lógica interna)
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getNombre() { return nombre; }

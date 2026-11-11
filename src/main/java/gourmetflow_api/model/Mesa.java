@@ -26,10 +26,9 @@ public class Mesa {
     @Column(nullable = false, length = 20)
     private String estado = "LIBRE"; // LIBRE, OCUPADA, RESERVADA
 
-    // Constructores
+
     public Mesa() {}
 
-    // Getters y Setters seguros
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Integer getNumeroMesa() { return numeroMesa; }
