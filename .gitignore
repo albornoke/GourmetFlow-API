@@ -36,3 +36,4 @@ build/
 **/config/secure/*
 *.env
 application-secret.yml
+application.yaml
