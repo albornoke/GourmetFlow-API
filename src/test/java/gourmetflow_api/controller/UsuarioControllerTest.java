@@ -116,7 +116,7 @@ class UsuarioControllerTest {
 
         mockMvc.perform(patch("/api/v1/usuarios/99/estado")
                         .param("activo", "false"))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isNotFound());
     }
 
     @Test

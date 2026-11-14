@@ -133,6 +133,6 @@ class PlatoControllerTest {
                 .when(platoService).eliminarPlato(99L);
 
         mockMvc.perform(delete("/api/v1/platos/99"))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isNotFound());
     }
 }

@@ -8,7 +8,11 @@ public record PedidoRequestDTO(
         @NotNull(message = "El número de mesa es obligatorio")
         @Min(value = 1, message = "El número de mesa debe ser válido")
         Integer numeroMesa,
-
+        
         @NotBlank(message = "El estado del pedido es obligatorio")
-        String estado // EJ: 'PENDIENTE', 'EN_PREPARACION', 'LISTO', 'ENTREGADO'
+        String estado, // EJ: 'PENDIENTE', 'EN_PREPARACION', 'LISTO', 'ENTREGADO'
+
+        Long clienteId, // Opcional para comandas rápidas
+
+        Long usuarioId  // ID del mesero/personal que atiende
 ) {}

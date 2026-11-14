@@ -58,7 +58,7 @@ class PedidoControllerTest {
 
     @Test
     void registrarPedido_ConDatosValidos_DeberiaRetornar201() throws Exception {
-        PedidoRequestDTO request = new PedidoRequestDTO(3, "PENDIENTE");
+        PedidoRequestDTO request = new PedidoRequestDTO(3, "PENDIENTE", null, null);
 
         Pedido pedidoCreado = new Pedido();
         pedidoCreado.setId(1L);
@@ -77,7 +77,7 @@ class PedidoControllerTest {
 
     @Test
     void registrarPedido_ConMesaNula_DeberiaRetornar400() throws Exception {
-        PedidoRequestDTO request = new PedidoRequestDTO(null, "PENDIENTE");
+        PedidoRequestDTO request = new PedidoRequestDTO(null, "PENDIENTE", null, null);
 
         mockMvc.perform(post("/api/v1/pedidos")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -114,6 +114,6 @@ class PedidoControllerTest {
                 .when(pedidoService).eliminarPedido(99L);
 
         mockMvc.perform(delete("/api/v1/pedidos/99"))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isNotFound());
     }
 }

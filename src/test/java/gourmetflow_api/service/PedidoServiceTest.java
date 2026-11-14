@@ -52,7 +52,7 @@ class PedidoServiceTest {
 
     @Test
     void crearPedido_ConDatosValidos_DeberiaGuardar() {
-        PedidoRequestDTO request = new PedidoRequestDTO(3, "PENDIENTE");
+        PedidoRequestDTO request = new PedidoRequestDTO(3, "PENDIENTE", null, null);
         when(pedidoRepository.save(any(Pedido.class))).thenReturn(pedido);
 
         Pedido resultado = pedidoService.crearPedido(request);
