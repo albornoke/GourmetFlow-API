@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import gourmetflow_api.model.MedioPago;
+import gourmetflow_api.model.Sede;
 
 @Entity
 @Table(name = "tb_pedidos")
@@ -35,6 +37,16 @@ public class Pedido {
     @JoinColumn(name = "usuario_id", nullable = true)
     private Usuario mesero;
 
+    // Relación con el Medio de Pago utilizado
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medio_pago_id", nullable = true)
+    private MedioPago medioPago;
+
+    // Relación con la Sede donde se realiza el pedido
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sede_id", nullable = true)
+    private Sede sede;
+
     public Pedido() {}
 
     public Long getId() { return id; }
@@ -54,4 +66,10 @@ public class Pedido {
 
     public Usuario getMesero() { return mesero; }
     public void setMesero(Usuario mesero) { this.mesero = mesero; }
+
+    public MedioPago getMedioPago() { return medioPago; }
+    public void setMedioPago(MedioPago medioPago) { this.medioPago = medioPago; }
+
+    public Sede getSede() { return sede; }
+    public void setSede(Sede sede) { this.sede = sede; }
 }

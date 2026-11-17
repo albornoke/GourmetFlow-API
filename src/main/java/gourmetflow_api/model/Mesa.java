@@ -2,6 +2,7 @@ package gourmetflow_api.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import gourmetflow_api.model.Sede;
 
 @Entity
 @Table(name = "tb_mesas")
@@ -26,6 +27,10 @@ public class Mesa {
     @Column(nullable = false, length = 20)
     private String estado = "LIBRE"; // LIBRE, OCUPADA, RESERVADA
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sede_id", nullable = true)
+    private Sede sede;
+
 
     public Mesa() {}
 
@@ -37,4 +42,6 @@ public class Mesa {
     public void setCapacidad(Integer capacidad) { this.capacidad = capacidad; }
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+    public Sede getSede() { return sede; }
+    public void setSede(Sede sede) { this.sede = sede; }
 }

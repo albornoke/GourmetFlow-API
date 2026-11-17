@@ -1,6 +1,7 @@
 package gourmetflow_api.model;
 
 import gourmetflow_api.security.EncryptedStringConverter;
+import gourmetflow_api.model.Turno;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -33,6 +34,10 @@ public class Usuario {
     @Column(nullable = false)
     private boolean activo = true; 
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "turno_id", nullable = true)
+    private Turno turno;
+
     public Usuario() {}
 
     public Usuario(String username, String password, Rol rol, String email) {
@@ -60,4 +65,7 @@ public class Usuario {
     
     public boolean isActivo() { return activo; }
     public void setActivo(boolean activo) { this.activo = activo; }
+
+    public Turno getTurno() { return turno; }
+    public void setTurno(Turno turno) { this.turno = turno; }
 }
