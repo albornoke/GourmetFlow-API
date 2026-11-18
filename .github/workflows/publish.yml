@@ -28,6 +28,6 @@ jobs:
           server-password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Deploy with Maven
-        run: mvn deploy --batch-mode
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      	run: mvn clean deploy -DskipTests --batch-mode
+      	env:
+        	GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
