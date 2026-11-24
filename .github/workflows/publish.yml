@@ -23,27 +23,24 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          server-id: github
-          server-username: albornoke
-          server-password: ${{ secrets.PACKAGES_TOKEN }}
 
-      - name: Verify token works for Maven auth
+      - name: Create Maven settings.xml
         run: |
-          echo "Testing Maven authentication with PACKAGES_TOKEN..."
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
-            -u "albornoke:${{ secrets.PACKAGES_TOKEN }}" \
-            "https://maven.pkg.github.com/albornoke/GourmetFlow-API/com/restaurant/gourmetflow-api/maven-metadata.xml" || true)
-          echo "HTTP status code from Maven repository: $HTTP_CODE"
-          if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "404" ]; then
-            echo "✅ Token authentication is working (200=found, 404=not found but authenticated)"
-          else
-            echo "❌ Token authentication FAILED with status: $HTTP_CODE"
-            echo "If 401: the token is invalid or lacks write:packages scope"
-            echo "If 403: the token lacks permission for this repository"
-            exit 1
-          fi
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml <<EOF
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+            <servers>
+              <server>
+                <id>github</id>
+                <username>${{ github.actor }}</username>
+                <password>${{ secrets.PACKAGES_TOKEN }}</password>
+              </server>
+            </servers>
+          </settings>
+          EOF
+          echo "settings.xml created successfully"
 
       - name: Build and Deploy with Maven
         run: mvn clean deploy --batch-mode
-        env:
-          GITHUB_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
