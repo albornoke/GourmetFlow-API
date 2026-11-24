@@ -23,11 +23,11 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          server-id: github # Debe coincidir con el id en el pom.xml
+          server-id: github
           server-username: ${{ github.actor }}
           server-password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Deploy with Maven
-      	run: mvn clean deploy -DskipTests --batch-mode
-      	env:
-        	GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn clean deploy --batch-mode
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
