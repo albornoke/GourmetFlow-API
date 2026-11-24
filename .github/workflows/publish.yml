@@ -25,9 +25,9 @@ jobs:
           distribution: 'temurin'
           server-id: github
           server-username: ${{ github.actor }}
-          server-password: ${{ secrets.GITHUB_TOKEN }}
+          server-password: ${{ secrets.PACKAGES_TOKEN }}
 
       - name: Build and Deploy with Maven
         run: mvn clean deploy --batch-mode
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
