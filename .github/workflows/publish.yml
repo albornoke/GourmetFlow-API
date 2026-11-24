@@ -27,6 +27,22 @@ jobs:
           server-username: albornoke
           server-password: ${{ secrets.PACKAGES_TOKEN }}
 
+      - name: Verify token works for Maven auth
+        run: |
+          echo "Testing Maven authentication with PACKAGES_TOKEN..."
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -u "albornoke:${{ secrets.PACKAGES_TOKEN }}" \
+            "https://maven.pkg.github.com/albornoke/GourmetFlow-API/com/restaurant/gourmetflow-api/maven-metadata.xml" || true)
+          echo "HTTP status code from Maven repository: $HTTP_CODE"
+          if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "404" ]; then
+            echo "✅ Token authentication is working (200=found, 404=not found but authenticated)"
+          else
+            echo "❌ Token authentication FAILED with status: $HTTP_CODE"
+            echo "If 401: the token is invalid or lacks write:packages scope"
+            echo "If 403: the token lacks permission for this repository"
+            exit 1
+          fi
+
       - name: Build and Deploy with Maven
         run: mvn clean deploy --batch-mode
         env:
